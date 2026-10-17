@@ -1,0 +1,112 @@
+/**
+ * Returns the Arcanea-ready AO config reference as formatted text.
+ * Used by `ao config-help` and injected into orchestrator system prompts.
+ */
+export function getConfigInstruction(): string {
+  return `
+# Arcanea Orchestrator Config Reference
+# File: agent-orchestrator.yaml
+
+# This config is designed for the Arcanea workspace on Windows.
+# It assumes the following local repos may already exist:
+# - C:/Users/frank/Arcanea
+# - C:/Users/frank/Arcanea/arcanea-code
+# - C:/Users/frank/Arcanea/oh-my-arcanea
+# - C:/Users/frank/Arcanea/claude-arcanea
+# - C:/Users/frank/Arcanea/arcanea-flow
+# - C:/Users/frank/Arcanea/arcanea-orchestrator
+
+port: 3000
+terminalPort: 14800
+directTerminalPort: 14801
+readyThresholdMs: 300000
+
+defaults:
+  runtime: tmux
+  agent: claude-code
+  workspace: worktree
+  notifiers:
+    - desktop
+  orchestrator:
+    agent: claude-code
+  worker:
+    agent: codex
+
+projects:
+  arcanea-platform:
+    name: Arcanea Platform
+    repo: frankxai/arcanea-ai-app
+    path: C:/Users/frank/Arcanea
+    defaultBranch: main
+    sessionPrefix: arcanea
+    workspace: worktree
+    agentRules: |
+      Keep Arcanea core changes isolated and keep the docs in sync with product behavior.
+    postCreate:
+      - pnpm install
+
+  arcanea-code:
+    name: Arcanea Code
+    repo: frankxai/arcanea-code
+    path: C:/Users/frank/Arcanea/arcanea-code
+    defaultBranch: dev
+    sessionPrefix: code
+    agent: opencode
+    workspace: worktree
+    postCreate:
+      - bun install
+
+  oh-my-arcanea:
+    name: Oh My Arcanea
+    repo: frankxai/oh-my-arcanea
+    path: C:/Users/frank/Arcanea/oh-my-arcanea
+    defaultBranch: dev
+    sessionPrefix: oma
+    agent: opencode
+    workspace: worktree
+    postCreate:
+      - bun install
+
+  claude-arcanea:
+    name: Claude Arcanea
+    repo: frankxai/claude-arcanea
+    path: C:/Users/frank/Arcanea/claude-arcanea
+    defaultBranch: master
+    sessionPrefix: claude
+    agent: claude-code
+    workspace: worktree
+    postCreate:
+      - npm install
+
+  arcanea-flow:
+    name: Arcanea Flow
+    repo: frankxai/arcanea-flow
+    path: C:/Users/frank/Arcanea/arcanea-flow
+    defaultBranch: main
+    sessionPrefix: flow
+    agent: codex
+    workspace: worktree
+    postCreate:
+      - npm install
+
+  arcanea-orchestrator:
+    name: Arcanea Orchestrator
+    repo: frankxai/arcanea-orchestrator
+    path: C:/Users/frank/Arcanea/arcanea-orchestrator
+    defaultBranch: main
+    sessionPrefix: ao
+    agent: codex
+    workspace: worktree
+    postCreate:
+      - pnpm install
+
+notificationRouting:
+  critical:
+    - desktop
+  high:
+    - desktop
+  low:
+    - desktop
+
+`.trim();
+}
