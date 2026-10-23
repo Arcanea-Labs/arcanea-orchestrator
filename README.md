@@ -7,16 +7,16 @@ This repo hosts two related pieces under one roof:
 1. **`@arcanea/orchestrator` npm package** — the headless dispatcher. Routes tasks to the right model across `claude`, `opencode`, `codex`, `gemini` based on `@arcanea/router-spec`. Install:
 
    ```bash
-   npm i -g @arcanea/orchestrator
-   arcanea-orchestrator doctor        # detect installed CLIs + infer auth tier
-   arcanea-orchestrator status        # unified dashboard
-   arcanea-orchestrator run --task code.debug "..."
-   arcanea-orchestrator swarm --from backlog.md
+   npm i -g @composio/ao
+   ao doctor        # detect installed CLIs + infer auth tier
+   ao status        # unified dashboard
+   ao run --task code.debug "..."
+   ao swarm --from backlog.md
    # short alias:
-   arco doctor
+   # arco doctor
    ```
 
-2. **Maintained fork of Composio's Agent Orchestrator** — the session spawner with tmux + git-worktree isolation and a web dashboard on `:4200`. Used by the npm package's `swarm` command for worktree-isolated parallel execution.
+2. **Maintained fork of Composio's Agent Orchestrator** — the session spawner with tmux + git-worktree isolation and a web dashboard on `:3000`. Used by the npm package's `swarm` command for worktree-isolated parallel execution.
 
 ## Architecture
 
@@ -34,7 +34,7 @@ This repo hosts two related pieces under one roof:
 │  ao (Composio fork)  —  session spawner              │
 │  - git worktree per worker                           │
 │  - tmux runtime per worker                           │
-│  - web dashboard on :4200                            │
+│  - web dashboard on :3000                            │
 └─────────────────────────────────────────────────────┘
 ```
 

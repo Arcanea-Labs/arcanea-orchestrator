@@ -71,7 +71,7 @@ npm install -g @composio/ao
 
 # Or install from source
 git clone <repo-url>
-cd arcanea-orchestrator && bash scripts/setup.sh
+cd arcanea-orchestrator && pnpm run build:bootstrap
 
 # Start on a repo
 ao start https://github.com/frankxai/arcanea
