@@ -21,10 +21,9 @@ This repo hosts two related pieces under one roof:
    Verified backend commands:
    ```bash
    npm i -g @composio/ao
-   ao doctor        # detect installed CLIs + infer auth tier
-   ao status        # unified dashboard
-   ao run --task code.debug "..."
-   ao swarm --from backlog.md
+   ao start         # initialize project config and start dashboard
+   ao status        # view active sessions
+   ao spawn         # start a new agent worker session
    ```
 
 ## Architecture
