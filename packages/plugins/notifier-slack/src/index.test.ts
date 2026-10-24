@@ -214,7 +214,7 @@ describe("notifier-slack", () => {
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       const prBlock = body.blocks.find(
         (b: Record<string, unknown>) =>
-          b.type === "section" && (b as any).text?.text?.includes("View Pull Request"),
+          b.type === "section" && (b as { text?: { text?: string } }).text?.text?.includes("View Pull Request"),
       );
       expect(prBlock).toBeDefined();
       expect(prBlock.text.text).toContain("https://github.com/org/repo/pull/42");
@@ -230,7 +230,7 @@ describe("notifier-slack", () => {
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       const prBlock = body.blocks.find(
         (b: Record<string, unknown>) =>
-          b.type === "section" && (b as any).text?.text?.includes("View Pull Request"),
+          b.type === "section" && (b as { text?: { text?: string } }).text?.text?.includes("View Pull Request"),
       );
       expect(prBlock).toBeUndefined();
     });
@@ -245,7 +245,7 @@ describe("notifier-slack", () => {
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       const ciBlock = body.blocks.find(
         (b: Record<string, unknown>) =>
-          b.type === "context" && (b as any).elements?.[0]?.text?.includes("CI:"),
+          b.type === "context" && (b as { elements?: Array<{ text?: string }> }).elements?.[0]?.text?.includes("CI:"),
       );
       expect(ciBlock).toBeUndefined();
     });
@@ -260,7 +260,7 @@ describe("notifier-slack", () => {
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       const ciBlock = body.blocks.find(
         (b: Record<string, unknown>) =>
-          b.type === "context" && (b as any).elements?.[0]?.text?.includes("CI:"),
+          b.type === "context" && (b as { elements?: Array<{ text?: string }> }).elements?.[0]?.text?.includes("CI:"),
       );
       expect(ciBlock).toBeDefined();
       expect(ciBlock.elements[0].text).toContain(":white_check_mark:");
@@ -276,7 +276,7 @@ describe("notifier-slack", () => {
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       const ciBlock = body.blocks.find(
         (b: Record<string, unknown>) =>
-          b.type === "context" && (b as any).elements?.[0]?.text?.includes("CI:"),
+          b.type === "context" && (b as { elements?: Array<{ text?: string }> }).elements?.[0]?.text?.includes("CI:"),
       );
       expect(ciBlock.elements[0].text).toContain(":x:");
     });

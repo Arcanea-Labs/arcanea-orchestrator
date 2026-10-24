@@ -8,7 +8,7 @@ vi.mock("node:child_process", () => {
   const mockExecFile = vi.fn();
   // promisify(execFile) checks for a custom promisify symbol. Set it so
   // await execFileAsync(...) returns { stdout, stderr } properly.
-  (mockExecFile as any)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
+  (mockExecFile as unknown as Record<symbol, unknown>)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
   return { execFile: mockExecFile };
 });
 
@@ -24,7 +24,7 @@ vi.mock("node:fs", () => ({
 }));
 
 // Get reference to the promisify-custom mock — this is what the plugin actually calls
-const mockExecFileCustom = (childProcess.execFile as any)[
+const mockExecFileCustom = (childProcess.execFile as unknown as Record<symbol, unknown>)[
   Symbol.for("nodejs.util.promisify.custom")
 ] as ReturnType<typeof vi.fn>;
 const expectedTmuxOptions = { timeout: 5_000 };
@@ -227,7 +227,7 @@ describe("runtime.create()", () => {
       sessionId: "no-env",
       workspacePath: "/tmp/ws",
       launchCommand: "echo hi",
-    } as any);
+    } as Parameters<typeof runtime.create>[0]);
 
     // First call should not contain -e flags
     const firstCallArgs = mockExecFileCustom.mock.calls[0][1] as string[];

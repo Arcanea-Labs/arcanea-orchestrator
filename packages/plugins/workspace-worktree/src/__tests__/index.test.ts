@@ -8,7 +8,7 @@ import type { ProjectConfig, WorkspaceCreateConfig, WorkspaceInfo } from "@compo
 vi.mock("node:child_process", () => {
   const mockExecFile = vi.fn();
   // Set custom promisify so `promisify(execFile)` returns { stdout, stderr }
-  (mockExecFile as any)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
+  (mockExecFile as unknown as Record<symbol, unknown>)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
   return { execFile: mockExecFile };
 });
 
@@ -37,7 +37,7 @@ import { create, manifest } from "../index.js";
 // Typed mock references
 // ---------------------------------------------------------------------------
 
-const mockExecFileAsync = (childProcess.execFile as any)[
+const mockExecFileAsync = (childProcess.execFile as unknown as Record<symbol, unknown>)[
   Symbol.for("nodejs.util.promisify.custom")
 ] as ReturnType<typeof vi.fn>;
 
