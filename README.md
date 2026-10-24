@@ -16,7 +16,15 @@ This repo hosts two related pieces under one roof:
    arco doctor
    ```
 
-2. **Maintained fork of Composio's Agent Orchestrator** — the session spawner with tmux + git-worktree isolation and a web dashboard on `:4200`. Used by the npm package's `swarm` command for worktree-isolated parallel execution.
+2. **Maintained fork of Composio's Agent Orchestrator** — the session spawner with tmux + git-worktree isolation and a web dashboard on `:3000`. Used by the npm package's `swarm` command for worktree-isolated parallel execution.
+
+   Verified backend commands:
+   ```bash
+   npm i -g @composio/ao
+   ao start         # initialize project config and start dashboard
+   ao status        # view active sessions
+   ao spawn         # start a new agent worker session
+   ```
 
 ## Architecture
 
@@ -34,7 +42,7 @@ This repo hosts two related pieces under one roof:
 │  ao (Composio fork)  —  session spawner              │
 │  - git worktree per worker                           │
 │  - tmux runtime per worker                           │
-│  - web dashboard on :4200                            │
+│  - web dashboard on :3000                            │
 └─────────────────────────────────────────────────────┘
 ```
 
