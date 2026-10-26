@@ -6,7 +6,7 @@ import type { ProjectConfig } from "@composio/ao-core";
 // Mock node:child_process with custom promisify support
 vi.mock("node:child_process", () => {
   const mockExecFile = vi.fn();
-  (mockExecFile as any)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
+  (mockExecFile as unknown as Record<symbol, unknown>)[Symbol.for("nodejs.util.promisify.custom")] = vi.fn();
   return { execFile: mockExecFile };
 });
 
@@ -24,7 +24,7 @@ vi.mock("node:os", () => ({
 }));
 
 // Get reference to the promisify-custom mock — this is what the plugin actually calls
-const mockExecFileAsync = (childProcess.execFile as any)[
+const mockExecFileAsync = (childProcess.execFile as unknown as Record<symbol, unknown>)[
   Symbol.for("nodejs.util.promisify.custom")
 ] as ReturnType<typeof vi.fn>;
 
